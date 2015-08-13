@@ -1,0 +1,92 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc 
+                          http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd         
+                          http://www.springframework.org/schema/beans 
+                          http://www.springframework.org/schema/beans/spring-beans-2.5.xsd         
+                          http://www.springframework.org/schema/context 
+                          http://www.springframework.org/schema/context/spring-context-2.5.xsd         
+                          http://www.springframework.org/schema/aop 
+                          http://www.springframework.org/schema/aop/spring-aop-3.1.xsd         
+                          http://www.springframework.org/schema/security 
+                          http://www.springframework.org/schema/security/spring-security-3.1.xsd
+                          http://www.springframework.org/schema/util 
+                          http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+                          
+                          
+	<bean id="myClass" class="samuel.tian.springSecurity.MyClass"/>
+	<bean id="myComponentSecurity"
+		class="org.springframework.security.access.intercept.aopalliance.MethodSecurityInterceptor">
+		<property name="authenticationManager" ref="authenticationManager" />
+		<property name="accessDecisionManager" ref="accessDecisionManager" />
+		<property name="securityMetadataSource" ref="mySecurityMetadataSource"/>
+	</bean>
+	
+	<bean id="mySecurityMetadataSource" class="org.springframework.security.access.method.MapBasedMethodSecurityMetadataSource">
+		<constructor-arg ref="methodMap"/>
+	</bean>
+	
+	<util:map id="methodMap" map-class="java.util.HashMap">
+		<entry key="samuel.tian.springSecurity.MyClass.executeCriticalSection">
+			<list>
+				<ref bean="sc1"/>
+			</list>
+		</entry>
+		<entry key="samuel.tian.springSecurity.MyClass.executeNormalSection">
+			<list>
+				<ref bean="sc2"/>
+			</list>
+		</entry>
+	</util:map>
+	
+	<bean id="sc1" class="org.springframework.security.access.SecurityConfig">
+		<constructor-arg index="0" value="ROLE_ADMIN"/>
+	</bean>
+
+	<bean id="sc2" class="org.springframework.security.access.SecurityConfig">
+		<constructor-arg index="0" value="ROLE_ANONYMOUS"/>
+	</bean>
+
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider>
+			<security:user-service id="userService">
+				<security:user name="sam" password="sam" authorities="ROLE_ADMIN" />
+				<security:user name="anon" password="anon"
+					authorities="ROLE_ANON" />
+			</security:user-service>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<bean id="accessDecisionManager"
+		class='org.springframework.security.access.vote.AffirmativeBased'>
+		<property name="decisionVoters">
+			<list>
+				<ref bean="roleVoter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="autoProxyCreator"
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="interceptorNames">
+			<list>
+				<value>myComponentSecurity</value>
+			</list>
+		</property>
+		<property name="beanNames">
+			<list>
+				<value>myClass</value>
+			</list>
+		</property>
+		<property name='proxyTargetClass' value="true" />
+	</bean>
+	
+	<bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter"/>
+</beans>
+     
+     
