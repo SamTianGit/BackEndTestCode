@@ -55,9 +55,9 @@
 	<security:authentication-manager alias="authenticationManager">
 		<security:authentication-provider>
 			<security:user-service id="userService">
-				<security:user name="sam" password="sam" authorities="ROLE_ADMIN" />
+				<security:user name="sam" password="sam" authorities="ROLE_ADMIN,ROLE_ANONYMOUS" />
 				<security:user name="anon" password="anon"
-					authorities="ROLE_ANON" />
+					authorities="ROLE_ANONYMOUS" />
 			</security:user-service>
 		</security:authentication-provider>
 	</security:authentication-manager>
