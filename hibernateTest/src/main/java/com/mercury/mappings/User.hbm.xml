@@ -4,7 +4,7 @@
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd"> 
 <hibernate-mapping>     
     <class name="com.mercury.beans.User" table="Sample">  
-        <cache usage="read-only"/>
+        <cache usage="read-write"/>
         <id name="name" column="Name"></id> 
         <property name="age" column="Age"/>
     </class>

@@ -17,7 +17,7 @@ public class Test5A {
 		Customer c = (Customer)session.createQuery(hql).uniqueResult();
 		System.out.println(c.getCid() + "\t" + c.getName());
 		Set<String> emails = c.getEmails();
-		//Hibernate.initialize(emails);
+		Hibernate.initialize(emails);
 		HibernateUtil.closeSession();
 		System.out.println("emails==null? " + (emails==null));
 		for (String email:emails) {

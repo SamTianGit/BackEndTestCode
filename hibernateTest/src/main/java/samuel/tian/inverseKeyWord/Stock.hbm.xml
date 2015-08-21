@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="samuel.tian.inverseKeyWord.Stock" table="stock">
+		<id name="stock_id" column="stock_id"></id>
+		<property name="stock_code" column="stock_code" />
+		<property name="stock_name" column="stock_name" />
+		<set name="stockDailyRecords" table="stock_daily_record" fetch="select" inverse="true">
+			<key>
+				<column name="STOCK_ID" not-null="true" />
+			</key>
+			<one-to-many class="samuel.tian.inverseKeyWord.StockDailyRecord" />
+		</set>
+	</class>
+</hibernate-mapping>

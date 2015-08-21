@@ -21,5 +21,7 @@
 		</property>
         <mapping resource="com/mercury/mappings/User.hbm.xml"/>
         <mapping resource="com/mercury/mappings/Customer.hbm.xml"/>
+        <mapping resource="samuel/tian/inverseKeyWord/Stock.hbm.xml"/>
+        <mapping resource="samuel/tian/inverseKeyWord/StockDailyRecord.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
