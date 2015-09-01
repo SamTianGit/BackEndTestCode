@@ -23,7 +23,7 @@ public class Test1A {
 		Session session2 = HibernateUtil.currentSession();
 		session2.merge(user);	// user is persistence in session2
 		user = (User)session2.load(User.class, "Tommy");
-		System.out.println(user);	// It prints out "Tommy 42"
+		System.out.println(user);	// It prints out "Tommy 33"
 		// If we make a transaction at this time, the table will be updated
 		Transaction tx = session2.beginTransaction();
 		tx.commit();

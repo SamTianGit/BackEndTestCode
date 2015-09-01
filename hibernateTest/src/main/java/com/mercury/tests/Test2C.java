@@ -20,8 +20,8 @@ public class Test2C {
 					.add(Restrictions.gt("age", 30)).uniqueResult();
 		//User user = new User();
 		//user.setAge(24);
-		User result = (User) ct.add(Example.create(user)).uniqueResult();
-		System.out.println(result);
+		//User result = (User) ct.add(Example.create(user)).uniqueResult();
+		System.out.println(user);
 		HibernateUtil.closeSession();
 	}
 }
